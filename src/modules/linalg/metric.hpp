@@ -22,6 +22,11 @@ DECLARE_UDF(linalg, closest_columns_fixed)
 
 
 /**
+ * @brief Compute the dot product of two dense vectors
+ */
+DECLARE_UDF(linalg, fast_array_dot)
+
+/**
  * @brief Compute the 1-norm
  */
 DECLARE_UDF(linalg, norm1)

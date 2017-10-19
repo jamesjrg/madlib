@@ -38,6 +38,9 @@ Refer to the linalg.sql_in file for documentation on each of the utility functio
 @par Linear Algebra Utility Functions
 <table class="output">
 
+<tr><th>fast_array_dot()</th>
+<td>Dot-product of two arrays. Uses eigen so faster than standard array_dot.</td></tr>
+
 <tr><th>norm1()</th></tr>
 <td>1-norm of a vector, \f$\|\vec{a}\|_1\f$.</td>
 
@@ -214,6 +217,24 @@ Result:
 @par Related Topics
 File linalg.sql_in documenting the SQL functions.
 */
+
+/**
+ * @brief Dot-product of two arrays. Uses eigen so faster than standard array_dot.
+ *
+ * @param x Array x
+ * @param y Array y
+ * @returns Dot-product of x and y.
+ *
+ */
+CREATE OR REPLACE FUNCTION MADLIB_SCHEMA.fast_array_dot(
+    x DOUBLE PRECISION[],
+    y DOUBLE PRECISION[]
+) RETURNS DOUBLE PRECISION
+AS 'MODULE_PATHNAME'
+LANGUAGE C
+IMMUTABLE
+STRICT
+m4_ifdef(`__HAS_FUNCTION_PROPERTIES__', `NO SQL');
 
 /**
  * @brief 1-norm of a vector

@@ -137,6 +137,16 @@ closestColumnsAndDistancesUDF(
 }
 
 double
+fastArrayDot(const MappedColumnVector& inX, const MappedColumnVector& inY) {
+    if (inX.size() != inY.size()) {
+        throw std::runtime_error("Found input arrays of "
+                "different lengths unexpectedly.");
+    }
+
+    return inX.dot(inY);
+}
+
+double
 distPNorm(const MappedColumnVector& inX, const MappedColumnVector& inY, double p) {
     if (inX.size() != inY.size()) {
         throw std::runtime_error("Found input arrays of "
@@ -494,6 +504,14 @@ norm1::run(AnyType& args) {
 AnyType
 norm2::run(AnyType& args) {
     return static_cast<double>(args[0].getAs<MappedColumnVector>().norm());
+}
+
+AnyType
+fast_array_dot::run(AnyType& args) {
+    return fastArrayDot(
+        args[0].getAs<MappedColumnVector>(),
+        args[1].getAs<MappedColumnVector>()
+    );
 }
 
 AnyType
